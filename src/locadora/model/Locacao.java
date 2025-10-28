@@ -1,4 +1,4 @@
-package model;
+package src.locadora.model;
 import java.time.LocalDate;
 
 public class Locacao {
