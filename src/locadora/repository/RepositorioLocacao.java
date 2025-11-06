@@ -11,7 +11,7 @@ public class RepositorioLocacao {
         locacoes.add(locacao);
     }
 
-    puiblic void removerLocacao(Locacao locacao) {
+    public void removerLocacao(Locacao locacao) {
         locacoes.remove(locacao);
     }
 
