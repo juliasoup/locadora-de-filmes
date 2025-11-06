@@ -1,4 +1,4 @@
-package src.locadora.repository;
+package locadora.repository;
 
 public class RepositorioFactory {
     

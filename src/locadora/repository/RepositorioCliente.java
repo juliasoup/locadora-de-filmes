@@ -1,5 +1,6 @@
-package src.locadora.repository;
-import src.locadora.model.Cliente;
+package locadora.repository;
+
+import locadora.model.Cliente;
 import java.util.List;
 import java.util.ArrayList;
 

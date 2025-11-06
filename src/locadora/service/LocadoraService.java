@@ -1,4 +1,4 @@
-package src.locadora.service;
+package locadora.service;
 
 public class LocadoraService {
     

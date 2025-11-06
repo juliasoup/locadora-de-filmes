@@ -1,4 +1,4 @@
-package src.locadora.util;
+package locadora.util;
 
 public class DatabaseConnection {
 

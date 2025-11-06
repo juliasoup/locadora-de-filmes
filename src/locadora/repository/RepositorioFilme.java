@@ -1,6 +1,6 @@
-package src.locadora.repository;
+package locadora.repository;
 
-import src.locadora.model.Filme;
+import locadora.model.Filme;
 import java.util.List;
 import java.util.ArrayList;
 
