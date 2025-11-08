@@ -12,7 +12,7 @@ public class RepositorioCliente {
         clientes.add(cliente);
     }
 
-    public Cliente bucarPorNome(String nome) {
+    public Cliente buscarClientePorNome(String nome) {
         for (Cliente cliente : clientes) {
             if (cliente.getNome().equalsIgnoreCase(nome)) {
                 return cliente;

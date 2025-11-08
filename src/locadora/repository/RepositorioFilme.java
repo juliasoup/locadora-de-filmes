@@ -19,5 +19,14 @@ public class RepositorioFilme {
         return new ArrayList<>(filmes);
     }
 
+    public Filme buscarFilmePorTitulo(String titulo) {
+    for (Filme filme : filmes) {
+        if (filme.getTitulo().equalsIgnoreCase(titulo)) {
+            return filme;
+        }
+    }
+    return null;
+}
+
 
 }
