@@ -1,71 +1,81 @@
-package view;
-
-import locadora.model.*;
-import locadora.repository.*;
-import locadora.service.*;
+package src.view;
+import src.locadora.repository.*;
+import src.locadora.service.*;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.List;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Criando repositórios e serviço
         RepositorioCliente repoCliente = RepositorioFactory.getRepositorioCliente();
         RepositorioFilme repoFilme = RepositorioFactory.getRepositorioFilme();
         RepositorioLocacao repoLocacao = RepositorioFactory.getRepositorioLocacao();
 
         LocadoraService locadora = new LocadoraService(repoLocacao, repoFilme, repoCliente);
-
-        // Cadastrando filmes e cliente
-        locadora.cadastararFilme("Harry Potter");
-        locadora.cadastararFilme("Alice no País das Maravilhas");
-        locadora.cadastararFilme("Carros");
-
+        
+        List<String> filmesDisponiveis = Arrays.asList("Harry Potter", "Alice no País das Maravilhas", "Carros");
+        locadora.cadastrarFilme(filmesDisponiveis.get(0));
+        locadora.cadastrarFilme(filmesDisponiveis.get(1));
+        locadora.cadastrarFilme(filmesDisponiveis.get(2));
         locadora.cadastrarCliente("Luciano", "123.456.789-00", "99999-9999");
 
-        System.out.println("\n🎬 Bem-vindo à Locadora de Filmes!");
+        System.out.println("\nBem-vindo à Locadora de Filmes!");
         System.out.println("--------------------------------");
-        System.out.println("Filmes disponíveis:");
-        System.out.println("1. Harry Potter");
-        System.out.println("2. Alice no País das Maravilhas");
-        System.out.println("3. Carros");
 
-        System.out.print("\nDigite o número do filme que deseja alugar: ");
-        int opcao = sc.nextInt();
-        sc.nextLine(); // limpar buffer
+        while (true) {
+            System.out.println("\n--- Menu de Opções ---");
+            System.out.println("1. Alugar Filme");
+            System.out.println("2. Devolver Filme");
+            System.out.println("3. Sair"); 
+            System.out.print("Escolha uma opção (1-3): ");
 
-        String filmeEscolhido = "";
+            String opcaoPrincipal = sc.nextLine();
 
-        // Versão compatível com Java 8/11
-        switch (opcao) {
-            case 1:
-                filmeEscolhido = "Harry Potter";
+            if (opcaoPrincipal.equals("3")) {
+                System.out.println("\nObrigado por usar a Locadora! Até mais.");
                 break;
-            case 2:
-                filmeEscolhido = "Alice no País das Maravilhas";
-                break;
-            case 3:
-                filmeEscolhido = "Carros";
-                break;
-            default:
-                System.out.println("Opção inválida! Encerrando o programa.");
-                sc.close();
-                return;
+            }
+
+            if (opcaoPrincipal.equals("1") || opcaoPrincipal.equals("2")) {
+                System.out.print("Digite o NOME que deseja usar para o cadastro/registro: ");
+                String nomeCliente = sc.nextLine();
+                
+                if (opcaoPrincipal.equals("1")) {
+                    System.out.println("\nFilmes disponíveis para aluguel:");
+                    for (int i = 0; i < filmesDisponiveis.size(); i++) {
+                        System.out.println((i + 1) + ". " + filmesDisponiveis.get(i));
+                    }
+                    System.out.print("Digite o NÚMERO do filme que deseja alugar: ");
+                    
+                    try {
+                        int opcaoFilme = Integer.parseInt(sc.nextLine());
+                        if (opcaoFilme > 0 && opcaoFilme <= filmesDisponiveis.size()) {
+                            String filmeEscolhido = filmesDisponiveis.get(opcaoFilme - 1);
+                            LocalDate dataLocacao = LocalDate.now();
+                            LocalDate dataDevolucao = dataLocacao.plusDays(5);
+                            
+                            locadora.alugarFilme(nomeCliente, filmeEscolhido, dataLocacao, dataDevolucao);
+                        } else {
+                            System.out.println("Opção de filme inválida.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("ERRO: Entrada inválida. Digite um número.");
+                    }
+
+                } else if (opcaoPrincipal.equals("2")) {
+    
+                    System.out.print("Digite o TÍTULO do filme a ser devolvido: ");
+                    String tituloDevolucao = sc.nextLine();
+                    
+                    locadora.devolverFilme(nomeCliente, tituloDevolucao);
+                }
+            } else {
+                System.out.println("Opção inválida. Tente novamente.");
+            }
         }
-
-        LocalDate dataLocacao = LocalDate.now();
-        LocalDate dataDevolucao = dataLocacao.plusDays(5);
-
-        locadora.alugarFilme("Luciano", filmeEscolhido, dataLocacao, dataDevolucao);
-
-        System.out.println("\n📜 Recibo de locação:");
-        System.out.println("Cliente: Luciano");
-        System.out.println("Filme alugado: " + filmeEscolhido);
-        System.out.println("Data da locação: " + dataLocacao);
-        System.out.println("Data de devolução: " + dataDevolucao);
-        System.out.println("--------------------------------");
-        System.out.println("✅ Locação realizada com sucesso!");
 
         sc.close();
     }
