@@ -1,4 +1,4 @@
-package locadora.model;
+package src.locadora.model;
 public class Cliente {
     private String nome;
     private String cpf;

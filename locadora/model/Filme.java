@@ -1,4 +1,4 @@
-package locadora.model;
+package src.locadora.model;
 public class Filme {
     private String titulo;
     private boolean disponivel;
